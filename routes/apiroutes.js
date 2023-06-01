@@ -19,14 +19,17 @@ router.post('/notes', (req,res) => {
     console.log(req.body);
     const { title, text} = req.body;
     if (title && text) {
+        console.log('insideif')
         const newNotes = {
        title,
        text
         };
+        return readFileAsync('./db/db.json', 'utf8').then(data => {
+            console.log(data)
+            writeFileAsync('./db/db.json', JSON.stringify([...JSON.parse(data),newNotes]))
+         res.json(newNotes)
+        })
     }
-    // readFileAsync('./db/db.json', 'utf8').then(data => {
-    //     writeFileAsync('./db/db.json', ), 
-    // }
     
 
 })
